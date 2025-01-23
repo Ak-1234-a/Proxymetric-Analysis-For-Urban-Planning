@@ -25,7 +25,7 @@ project/
 │   ├── flask_api.py        # Flask server code
 │   ├── data_processing.py  # Handles OSM data loading and processing
 │   ├── feature_extraction.py  # Extracts proximity and amenity-related features
-│   ├── model.py            # Trains and predicts using logistic regression
+│   ├── model.py            # Trains and predicts using Random Forest Classifier model
 │   └── requirements.txt    # Python dependencies
 └── README.md               # Project documentation
 ```
