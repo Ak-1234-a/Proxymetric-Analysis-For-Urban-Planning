@@ -1,0 +1,164 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f2f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+.container {
+    background-color: white;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Header Styles */
+header {
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+header h1:hover {
+    color: #4CAF50;
+}
+
+header p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Map Styles */
+.map {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.action-container {
+    margin: 20px;
+}
+
+button {
+    padding: 12px 25px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Location Info */
+.location-info {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.location-info p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.location-info span {
+    font-weight: 600;
+}
+
+/* Range Slider */
+.slider-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#rangeSlider {
+    width: 100%;
+    margin-top: 10px;
+}
+
+#sliderValue {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+/* Result Styles */
+.result-container {
+    margin-top: 20px;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.result-container h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    color: #777;
+}
+
+footer p {
+    font-style: italic;
+}
+
+/* Button Focus Effect */
+button:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}
+
+/* Smooth transitions for interactive elements */
+.container, header, .action-container, .result-container {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+button:active {
+    transform: scale(0.98);
+}

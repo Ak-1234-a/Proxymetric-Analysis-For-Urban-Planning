@@ -5,14 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proximity Detection System</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://www.iconfinder.com/icons/1770524/geometry_location_map_marker_nearest_pin_icon" type="image/x-icon">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
-    <h1>Proximity Detection System</h1>
-    <label for="location">Enter Location (Latitude, Longitude):</label>
-    <input type="text" id="location" placeholder="e.g., 40.7128,-74.0060">
-    <button onclick="predictProximity()">Check Proximity</button>
+    <div class="container">
+        <header>
+            <h1>Proximity Detection System</h1>
+            <p>Click on the map to select a location, or use your current location to check proximity to nearby places.</p>
+        </header>
 
-    <h2 id="result"></h2>
+        <div id="map" class="map"></div>
+
+        <div class="action-container">
+            <button onclick="getCurrentLocation()">Use My Current Location</button>
+            <button onclick="checkProximity()">Check My Proximity</button>
+        </div>
+
+        <div class="location-info">
+            <p><strong>Latitude:</strong> <span id="latitude">N/A</span></p>
+            <p><strong>Longitude:</strong> <span id="longitude">N/A</span></p>
+            <p><strong>Address:</strong> <span id="address">N/A</span></p>
+        </div>
+
+        <div class="slider-container">
+            <label for="rangeSlider">Select Range (km):</label>
+            <input type="range" id="rangeSlider" min="1" max="15" step="1" value="10">
+            <span id="sliderValue">10</span> km
+        </div>
+
+        <div class="result-container">
+            <h2 id="result">Select a location to start.</h2>
+        </div>
+
+        <footer>
+            <p>Powered by Proximity Detection System</p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
