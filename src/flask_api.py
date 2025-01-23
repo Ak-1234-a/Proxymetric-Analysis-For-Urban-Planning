@@ -1,40 +1,69 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS to allow cross-origin requests
+import pandas as pd
+import geopandas as gpd
 from model import predict, train_model
 from feature_extraction import extract_features
-from data_processing import get_pois, download_osm_data
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
-# Load data and train model on startup (simplified for this example)
-location = "Madurai, Tamil Nadu, India"  # Example location to fetch initial POIs
-nodes, edges = download_osm_data(location)
-pois = get_pois(location)
+# Paths to your dataset files
+nodes_path = "./data/osm_nodes.csv"
+edges_path = "./data/osm_edges.csv"
+pois_path = "./data/pois.geojson"
 
-# Extract features from POIs (simplified)
-# Use actual latitude and longitude values for the initial training
-features = [extract_features((9.925, 78.119), pois)]  # Example: feature extraction for Madurai
-labels = [1]  # Dummy labels for simplicity (1 = well-connected)
+# Function to load OSM data (nodes and edges)
+def load_osm_data_from_files(nodes_file, edges_file):
+    """
+    Load nodes and edges from CSV files into DataFrames.
+    """
+    nodes = pd.read_csv(nodes_file)
+    edges = pd.read_csv(edges_file)
+    return nodes, edges
 
-# Train the model
-model = train_model(features, labels)
+# Function to load POIs from GeoJSON file
+def load_pois_from_file(pois_file):
+    """
+    Load POIs from GeoJSON file into a GeoDataFrame.
+    """
+    pois = gpd.read_file(pois_file)
+    return pois
+
+# Load data from local files
+nodes, edges = load_osm_data_from_files(nodes_path, edges_path)
+pois = load_pois_from_file(pois_path)
+
+# Generate features for multiple locations
+locations = [
+    (9.925, 78.119),  # Madurai center
+    (9.938, 78.130),  # Another point
+    (9.950, 78.100),  # Another location
+]
+features = [extract_features(loc, pois) for loc in locations]
+labels = [1, 0, 1]  # Example labels for well-connected or poorly connected
+
+# Train the model if sufficient data is available
+if len(features) > 1:
+    model = train_model(features, labels)
+else:
+    raise ValueError("Not enough samples to train the model. Please add more data.")
 
 @app.route('/predict', methods=['POST'])
 def predict_proximity():
-    # Get data from the user
     data = request.get_json()
-    location = data['location']  # Example: {"location": [9.925, 78.119]}
-
-    # Extract latitude and longitude from the input location
-    lat, lon = location
-
-    # Download POIs and extract features for the input location
-    pois = get_pois(f"{lat},{lon}")
-    input_features = extract_features((lat, lon), pois)
     
-    # Predict the connectivity status
+    # Ensure the 'location' field contains latitude and longitude
+    if 'location' not in data:
+        return jsonify({'error': 'Location data is missing'}), 400
+    
+    input_location = tuple(data['location'])  # Ensure it's a tuple
+    
+    # Extract features and predict
+    input_features = extract_features(input_location, pois)
     prediction = predict(model, input_features)
     
-    # Return result as JSON response
+    # Return prediction result
     return jsonify({'prediction': "Well-connected" if prediction[0] == 1 else "Poorly connected"})
 
 if __name__ == '__main__':
