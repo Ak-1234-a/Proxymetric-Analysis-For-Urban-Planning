@@ -64,7 +64,7 @@ def predict_proximity():
     prediction = predict(model, input_features)
     
     # Return prediction result
-    return jsonify({'prediction': "Well-connected" if prediction[0] == 1 else "Poorly connected"})
+    return jsonify({'prediction': "This location is ideal with all essential facilities nearby." if prediction[0] == 1 else "This location lacks sufficient nearby services."})
 
 if __name__ == '__main__':
     app.run(debug=True)
