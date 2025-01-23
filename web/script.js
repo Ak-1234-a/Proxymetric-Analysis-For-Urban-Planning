@@ -3,6 +3,9 @@ let currentMarker;
 let rangeCircle;
 let currentLocation = { lat: 51.505, lon: -0.09 }; // Default location
 
+// Set the default range to 1.5 km
+const defaultRange = 1.5; // in km
+
 // Initialize the map
 function initMap() {
     map = L.map('map').setView([51.505, -0.09], 13); // Default center is set to London
@@ -17,8 +20,8 @@ function initMap() {
         .bindPopup("You are here!")
         .openPopup();
 
-    // Initialize range circle
-    rangeCircle = L.circle([51.505, -0.09], { radius: 10000 }).addTo(map);
+    // Initialize range circle with the default 1.5 km radius
+    rangeCircle = L.circle([51.505, -0.09], { radius: defaultRange * 1000 }).addTo(map);
 
     // Map click listener
     map.on('click', function(e) {
@@ -27,14 +30,8 @@ function initMap() {
         currentLocation = { lat, lon };
         updateLocationInfo(lat, lon);
         updateMarker(lat, lon);
+        updateRange(); // Update range circle to the default value
     });
-
-    // Range slider event listener
-    const slider = document.getElementById('rangeSlider');
-    slider.addEventListener('input', updateRange);
-
-    // Set initial range display
-    document.getElementById('sliderValue').innerText = slider.value;
 }
 
 // Get current location of the user
@@ -60,7 +57,7 @@ function getCurrentLocation() {
             // Update location info
             updateLocationInfo(lat, lon);
 
-            // Update range circle
+            // Update range circle with the default 1.5 km radius
             updateRange();
         });
     } else {
@@ -89,20 +86,17 @@ function updateLocationInfo(lat, lon) {
         });
 }
 
-// Update the range circle radius based on the slider value
+// Update the range circle radius based on the default 1.5 km range
 function updateRange() {
-    const range = document.getElementById('rangeSlider').value;
-    document.getElementById('sliderValue').innerText = range;
-
-    // Update the circle's radius
+    // Update the circle's radius to the default range (1.5 km)
     if (rangeCircle) {
-        rangeCircle.setRadius(range * 1000); // Convert km to meters
+        rangeCircle.setRadius(defaultRange * 1000); // Convert km to meters
     }
 
     // Center the circle at the current marker location
     rangeCircle.setLatLng([currentLocation.lat, currentLocation.lon]);
 
-    // Optionally call your backend with the range and location to show proximity prediction
+    // Optionally call your backend with the static range and location to show proximity prediction
     checkProximity();
 }
 
@@ -120,9 +114,8 @@ function updateMarker(lat, lon) {
 function checkProximity() {
     const lat = currentLocation.lat;
     const lon = currentLocation.lon;
-    const range = document.getElementById('rangeSlider').value;
 
-    // Make your proximity prediction call here
+    // Use the default range (1.5 km) here
     fetch('http://127.0.0.1:5000/predict', {
         method: 'POST',
         headers: {
@@ -130,7 +123,7 @@ function checkProximity() {
         },
         body: JSON.stringify({
             "location": [lat, lon],
-            "range": range
+            "range": defaultRange
         })
     })
     .then(response => response.json())

@@ -21,19 +21,13 @@
 
         <div class="action-container">
             <button onclick="getCurrentLocation()">Use My Current Location</button>
-            <button onclick="checkProximity()">Check My Proximity</button>
+            <button onclick="checkProximity()">Check Proximity</button>
         </div>
 
         <div class="location-info">
             <p><strong>Latitude:</strong> <span id="latitude">N/A</span></p>
             <p><strong>Longitude:</strong> <span id="longitude">N/A</span></p>
             <p><strong>Address:</strong> <span id="address">N/A</span></p>
-        </div>
-
-        <div class="slider-container">
-            <label for="rangeSlider">Select Range (km):</label>
-            <input type="range" id="rangeSlider" min="1" max="15" step="1" value="10">
-            <span id="sliderValue">10</span> km
         </div>
 
         <div class="result-container">
