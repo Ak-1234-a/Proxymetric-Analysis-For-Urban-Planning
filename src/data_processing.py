@@ -2,17 +2,7 @@ import pandas as pd
 import geopandas as gpd
 
 def load_osm_data_from_files(nodes_path, edges_path):
-    """
-    Loads OSM node and edge data from CSV files.
-    
-    Args:
-        nodes_path (str): Path to the OSM nodes CSV file.
-        edges_path (str): Path to the OSM edges CSV file.
-        
-    Returns:
-        nodes (GeoDataFrame): GeoDataFrame of OSM nodes.
-        edges (GeoDataFrame): GeoDataFrame of OSM edges.
-    """
+
     nodes = pd.read_csv(nodes_path)
     edges = pd.read_csv(edges_path)
     
