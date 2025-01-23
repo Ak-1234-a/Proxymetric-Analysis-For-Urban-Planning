@@ -12,7 +12,7 @@ def extract_features(location, pois):
         raise ValueError("POIs GeoDataFrame does not contain a 'geometry' column.")
     
     for _, poi in pois.iterrows():
-        if isinstance(poi.geometry, Point):  # Ensure the geometry is a valid Point
+        if isinstance(poi.geometry, Point):  
             poi_location = (poi.geometry.y, poi.geometry.x)  # Extract latitude and longitude
             distance = calculate_distance(location, poi_location)
             distances.append(distance)
